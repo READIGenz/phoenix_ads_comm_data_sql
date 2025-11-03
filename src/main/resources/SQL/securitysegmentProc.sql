@@ -26,7 +26,7 @@ BEGIN
         COALESCE(ss.Value_of_Security, ''),
         COALESCE(ss.Date_of_Valuation, ''),
         cf.cred_id
-    FROM ss AS ss
+    FROM Security_Segment AS ss
     JOIN credit_facility_seg AS cf
           ON ss.A_c_No_ = cf.Account_Number
         WHERE cf.cred_id IS NOT NULL;

@@ -84,7 +84,7 @@ BEGIN
         '',                                                 -- Udyam_Registration_Number placeholder
         COALESCE(c.UID, ''),
         COALESCE(c.Voter_ID, '')
-    FROM rs c
+    FROM Relationship_Segment c
     JOIN borrower_seg b
       ON c.A_c_No_ = SUBSTRING_INDEX(b.unique_commercial_id, '_', 1)
     WHERE b.borrower_id IS NOT NULL;

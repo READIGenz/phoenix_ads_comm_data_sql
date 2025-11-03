@@ -108,11 +108,11 @@ BEGIN
             WHEN LENGTH(cf.Loan_Renewal_Date) = 7 THEN LPAD(cf.Loan_Renewal_Date, 8, '0')
             ELSE COALESCE(cf.Loan_Renewal_Date, '')
         END,
-        COALESCE(cf.Overdue_Bucket_01__1_–_30_days_, ''),
-        COALESCE(cf.Overdue_Bucket_02__31_–_60_days_, ''),
-        COALESCE(cf.Overdue_Bucket_03__61_–_90_days_, ''),
-        COALESCE(cf.Overdue_Bucket_04_91_–_180_days_, ''),
-        COALESCE(cf.Overdue_Bucket_05__Above_180_days_, ''),
+        COALESCE(cf.Overdue_Bucket_01___1_–_30_days_, ''),
+        COALESCE(cf.Overdue_Bucket_02___31_–_60_days_, ''),
+        COALESCE(cf.Overdue_Bucket_03___61_–_90_days_, ''),
+        COALESCE(cf.Overdue_Bucket_04___91_–_180_days_, ''),
+        COALESCE(cf.Overdue_Bucket_05___Above_180_days__, ''),
         COALESCE(cf.Previous_Account_Number, ''),
         IF(LENGTH(COALESCE(cf.Major_reasons_for_Restructuring, '')) = 1,
            CONCAT('0', COALESCE(cf.Major_reasons_for_Restructuring, '')),
@@ -139,7 +139,7 @@ BEGIN
         ) AS Transaction_Type_Code,
         COALESCE(cf.Wilful_Default_Status, ''),
         br.borrower_id
-    FROM cr AS cf
+    FROM Credit_Facility_Segment AS cf
     JOIN borrower_seg AS br
       ON cf.A_c_No_ = SUBSTRING_INDEX(br.unique_commercial_id, '_', 1)
     WHERE br.borrower_id IS NOT NULL;

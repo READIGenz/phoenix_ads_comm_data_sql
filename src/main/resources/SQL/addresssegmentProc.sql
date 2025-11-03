@@ -44,7 +44,7 @@ BEGIN
         COALESCE(a.Telephone_Area_Code, ''),
         COALESCE(a.Telephone_Number_s_, ''),
         b.borrower_id
-    FROM addresssegment a
+    FROM Address_Segment a
     JOIN borrower_seg b
       ON a.A_c_No_ = SUBSTRING_INDEX(b.unique_commercial_id, '_', 1)
     WHERE b.borrower_id IS NOT NULL;

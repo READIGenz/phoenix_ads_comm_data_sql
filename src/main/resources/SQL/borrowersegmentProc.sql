@@ -17,7 +17,7 @@ BEGIN
        ) AS Assessment_Agency___Authority,
 
         COALESCE(Borrowers_Legal_Constitution, ''),
-        COALESCE(Borrowes_Name, ''),
+        COALESCE(Borrower_Name, ''),
         COALESCE(Borrower_Short_Name, ''),
         IF(LENGTH(COALESCE(Business_Category, '')) = 1,
         CONCAT('0', COALESCE(Business_Category, '')),
@@ -36,7 +36,7 @@ BEGIN
         COALESCE(Class_of_Activity_2, ''),
         COALESCE(Class_of_Activity_3, ''),
         COALESCE(Company_Registration_Number, ''),
-        COALESCE(CONCAT(COALESCE(A_c_No_, ''), '_', COALESCE(Borrowes_Name, '')), '') AS unique_commercial_id,
+        COALESCE(CONCAT(COALESCE(A_c_No_, ''), '_', COALESCE(Borrower_Name, '')), '') AS unique_commercial_id,
         COALESCE(Financial_Year, ''),
         COALESCE(Date_of_Incorporation, ''),
         COALESCE(Member_Branch_Code, ''),
@@ -48,7 +48,7 @@ BEGIN
         COALESCE(SIC_Code, ''),
         COALESCE(TIN, ''),
         '' AS udyam_no
-    FROM bs
+    FROM Borrower_Segment
     WHERE borrower_id IS NOT NULL
       AND borrower_id != '';
 END
