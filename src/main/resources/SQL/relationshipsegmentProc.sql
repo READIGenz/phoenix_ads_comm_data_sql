@@ -61,7 +61,10 @@ BEGIN
         COALESCE(c.Fax_Area_Code, ''),
         COALESCE(c.Fax_Number_s_, ''),
         COALESCE(c.Full_Name, ''),
-        COALESCE(c.Gender, ''),
+        IF(LENGTH(COALESCE(c.Gender, '')) = 1,
+           CONCAT('0', COALESCE(c.Gender, '')),
+           COALESCE(c.Gender, '')
+        ) AS Gender,
         COALESCE(c.Mobile_Number_s_, ''),
         COALESCE(c.Individual_Name_Prefix, ''),
         COALESCE(c.PAN, ''),

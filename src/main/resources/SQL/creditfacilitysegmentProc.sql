@@ -45,7 +45,11 @@ BEGIN
         borrower_id
     )
     SELECT
-        COALESCE(cf.Account_Status, ''),
+        IF(LENGTH(COALESCE(cf.Account_Status, '')) = 1,
+           CONCAT('0', COALESCE(cf.Account_Status, '')),
+           COALESCE(cf.Account_Status, '')
+        ) AS Account_Status,
+
         CASE
             WHEN LENGTH(cf.Account_Status_Date) = 7 THEN LPAD(cf.Account_Status_Date, 8, '0')
             ELSE COALESCE(cf.Account_Status_Date, '')
@@ -62,10 +66,22 @@ BEGIN
             WHEN LENGTH(cf.Asset_Classification_Date) = 7 THEN LPAD(cf.Asset_Classification_Date, 8, '0')
             ELSE COALESCE(cf.Asset_Classification_Date, '')
         END,
-        COALESCE(cf.Asset_Classification, ''),  -- Days_Past_Due (or change if numeric)
-        COALESCE(cf.Asset_based_Security_coverage, ''),
+        IF(LENGTH(COALESCE(cf.Asset_Classification, '')) = 1,
+           CONCAT('000', COALESCE(cf.Asset_Classification, '')),
+        IF(LENGTH(COALESCE(cf.Asset_Classification, '')) = 2,
+        CONCAT('00', COALESCE(cf.Asset_Classification, '')),
+        COALESCE(cf.Asset_Classification, '')
+        )
+        ) AS Asset_Classification,  -- Days_Past_Due (or change if numeric)
+        IF(LENGTH(COALESCE(cf.Asset_based_Security_coverage, '')) = 1,
+           CONCAT('0', COALESCE(cf.Asset_based_Security_coverage, '')),
+           COALESCE(cf.Asset_based_Security_coverage, '')
+        ) AS Asset_based_Security_coverage,
         COALESCE(cf.Bank_Remark_Code, ''),
-        COALESCE(cf.Credit_Type, ''),
+        IF(LENGTH(COALESCE(cf.Credit_Type, '')) = 3,
+           CONCAT('0', COALESCE(cf.Credit_Type, '')),
+           COALESCE(cf.Credit_Type, '')
+        ) AS Credit_Type,
         COALESCE(cf.Currency_Code, ''),
         COALESCE(cf.Current_Balance___Limit_Utilized__Mark_to_Market, ''),
         CASE
@@ -78,7 +94,10 @@ BEGIN
         END,
         COALESCE(cf.Dispute_ID_No_, ''),
         COALESCE(cf.Drawing_Power, ''),
-        COALESCE(cf.Guarantee_Coverage, ''),
+        IF(LENGTH(COALESCE(cf.Guarantee_Coverage, '')) = 1,
+           CONCAT('0', COALESCE(cf.Guarantee_Coverage, '')),
+           COALESCE(cf.Guarantee_Coverage, '')
+        ) AS Guarantee_Coverage,
         COALESCE(cf.High_Credit, ''),
         COALESCE(cf.Installment_Amount, ''),
         CASE
@@ -95,17 +114,29 @@ BEGIN
         COALESCE(cf.Overdue_Bucket_04_91_–_180_days_, ''),
         COALESCE(cf.Overdue_Bucket_05__Above_180_days_, ''),
         COALESCE(cf.Previous_Account_Number, ''),
-        COALESCE(cf.Major_reasons_for_Restructuring, ''),
-        COALESCE(cf.Repayment_Frequency, ''),
+        IF(LENGTH(COALESCE(cf.Major_reasons_for_Restructuring, '')) = 1,
+           CONCAT('0', COALESCE(cf.Major_reasons_for_Restructuring, '')),
+           COALESCE(cf.Major_reasons_for_Restructuring, '')
+        ) AS Major_reasons_for_Restructuring,
+        IF(LENGTH(COALESCE(cf.Repayment_Frequency, '')) = 1,
+           CONCAT('0', COALESCE(cf.Repayment_Frequency, '')),
+           COALESCE(cf.Repayment_Frequency, '')
+        ) AS Repayment_Frequency,
         CASE
             WHEN LENGTH(cf.Facility___Loan_Activation___Sanction_Date) = 7 THEN LPAD(cf.Facility___Loan_Activation___Sanction_Date, 8, '0')
             ELSE COALESCE(cf.Facility___Loan_Activation___Sanction_Date, '')
         END,
         COALESCE(cf.Suit_Amount_in_Rupees, ''),
         COALESCE(cf.Suit_Reference_Number, ''),
-        COALESCE(cf.Suit_Filed_Status, ''),
+        IF(LENGTH(COALESCE(cf.Suit_Filed_Status, '')) = 1,
+           CONCAT('0', COALESCE(cf.Suit_Filed_Status, '')),
+           COALESCE(cf.Suit_Filed_Status, '')
+        ) AS Suit_Filed_Status,
         COALESCE(cf.Tenure___Weighted_Average_maturity_period_of_Contracts, ''),
-        COALESCE(cf.Transaction_Type_Code, ''),
+        IF(LENGTH(COALESCE(cf.Transaction_Type_Code, '')) = 1,
+           CONCAT('0', COALESCE(cf.Transaction_Type_Code, '')),
+           COALESCE(cf.Transaction_Type_Code, '')
+        ) AS Transaction_Type_Code,
         COALESCE(cf.Wilful_Default_Status, ''),
         br.borrower_id
     FROM cr AS cf

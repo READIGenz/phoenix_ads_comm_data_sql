@@ -53,7 +53,10 @@ BEGIN
         COALESCE(gs.Fax_Area_Code, ''),
         COALESCE(gs.Fax_Number_s_, ''),
         COALESCE(gs.Full_Name, ''),
-        COALESCE(gs.Gender, ''),
+        IF(LENGTH(COALESCE(gs.Gender, '')) = 1,
+           CONCAT('0', COALESCE(gs.Gender, '')),
+           COALESCE(gs.Gender, '')
+        ) AS Gender,
         COALESCE(gs.Guarantor_DUNS_Number, ''),
         COALESCE(gs.Guarantor_Entity_Name, ''),
         COALESCE(gs.Guarantor_Type, ''),

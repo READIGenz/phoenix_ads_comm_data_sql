@@ -24,7 +24,10 @@ BEGIN
         COALESCE(a.Address_Line_2, ''),
         COALESCE(a.Address_Line_3, ''),
         COALESCE(a.Borrower_Office_DUNS_Number, ''),
-        COALESCE(a.Borrower_Office_Location_Type, ''),
+        IF(LENGTH(COALESCE(a.Borrower_Office_Location_Type, '')) = 1,
+           CONCAT('0', COALESCE(a.Borrower_Office_Location_Type, '')),
+           COALESCE(a.Borrower_Office_Location_Type, '')
+        ) AS Borrower_Office_Location_Type,
         COALESCE(a.City_Town, ''),
         COALESCE(a.Country, ''),
         COALESCE(a.District, ''),
@@ -33,7 +36,11 @@ BEGIN
         COALESCE(a.Filler, ''),
         COALESCE(a.Mobile_Number_s_, ''),
         COALESCE(a.Pin_Code, ''),
-        COALESCE(a.State_Union_Territory, ''),
+       IF(LENGTH(COALESCE(a.State_Union_Territory, '')) = 1,
+          CONCAT('0', COALESCE(a.State_Union_Territory, '')),
+          COALESCE(a.State_Union_Territory, '')
+       ) AS State_Union_Territory,
+
         COALESCE(a.Telephone_Area_Code, ''),
         COALESCE(a.Telephone_Number_s_, ''),
         b.borrower_id

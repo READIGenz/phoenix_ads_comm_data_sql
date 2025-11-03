@@ -11,12 +11,22 @@ BEGIN
     SELECT
         COALESCE(borrower_id, ''),
         '' AS application,
-        COALESCE(Assessment_Agency___Authority, ''),
+       IF(LENGTH(COALESCE(Assessment_Agency___Authority, '')) = 1,
+          CONCAT('0', COALESCE(Assessment_Agency___Authority, '')),
+          COALESCE(Assessment_Agency___Authority, '')
+       ) AS Assessment_Agency___Authority,
+
         COALESCE(Borrowers_Legal_Constitution, ''),
         COALESCE(Borrowes_Name, ''),
         COALESCE(Borrower_Short_Name, ''),
-        COALESCE(Business_Category, ''),
-        COALESCE(Business__Industry_Type, ''),
+        IF(LENGTH(COALESCE(Business_Category, '')) = 1,
+        CONCAT('0', COALESCE(Business_Category, '')),
+        COALESCE(Business_Category, '')
+        ) AS Business_Category,
+        IF(LENGTH(COALESCE(Business__Industry_Type, '')) = 1,
+           CONCAT('0', COALESCE(Business__Industry_Type, '')),
+           COALESCE(Business__Industry_Type, '')
+        ) AS Business__Industry_Type,
         COALESCE(Credit_Rating, ''),
         COALESCE(Credit_Rating_As_On, ''),
         COALESCE(Credit_Rating_Expiry_Date, ''),

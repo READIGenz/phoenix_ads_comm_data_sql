@@ -23,7 +23,10 @@ BEGIN
         END AS date_of_dishonour,
         COALESCE(cd.Filler, ''),
         COALESCE(cd.Number_of_times_dishonoured, ''),
-        COALESCE(cd.Reason_for_Dishonour, ''),
+        IF(LENGTH(COALESCE(cd.Reason_for_Dishonour, '')) = 1,
+           CONCAT('0', COALESCE(cd.Reason_for_Dishonour, '')),
+           COALESCE(cd.Reason_for_Dishonour, '')
+        ) AS Reason_for_Dishonour,
         cf.cred_id
     FROM cd AS cd
     JOIN credit_facility_seg AS cf
