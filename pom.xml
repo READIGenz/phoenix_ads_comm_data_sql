@@ -13,7 +13,7 @@
     <groupId>commercial.sqldata</groupId>
     <artifactId>Commercial_SQL_Data</artifactId>
     <version>1.0</version>
-    <name>SBM_Data</name>
+    <name>Commercial_Procedures</name>
     <description>SQL Procedures and other logic which are specific to individual clients depending on the data format they provide.</description>
 
     <properties>

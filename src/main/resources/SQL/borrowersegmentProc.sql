@@ -9,7 +9,7 @@ BEGIN
         prev_mem_Branch_code, sales_fig, serv_Tax_No, sic_code, tin_No, udyam_no
     )
     SELECT
-        COALESCE(borrower_id, ''),
+        COALESCE(A_c_No_, ''),
         '' AS application,
        IF(LENGTH(COALESCE(Assessment_Agency___Authority, '')) = 1,
           CONCAT('0', COALESCE(Assessment_Agency___Authority, '')),
@@ -49,6 +49,6 @@ BEGIN
         COALESCE(TIN, ''),
         '' AS udyam_no
     FROM Borrower_Segment
-    WHERE borrower_id IS NOT NULL
-      AND borrower_id != '';
+    WHERE A_c_No_ IS NOT NULL
+      AND A_c_No_ != '';
 END

@@ -73,9 +73,8 @@ BEGIN
         COALESCE(gs.UID, ''),
         COALESCE(gs.Voter_ID, ''),
         COALESCE(gs.Individual_Name_Prefix, ''),
-        cf.cred_id
+        COALESCE(gs.A_c_No_, '')
     FROM Guarantor_Segment gs
-    JOIN credit_facility_seg AS cf
-      ON gs.A_c_No_ = cf.Account_Number
-    WHERE cf.cred_id IS NOT NULL;
+    WHERE A_c_No_ IS NOT NULL
+      AND A_c_No_ != '';
 END;

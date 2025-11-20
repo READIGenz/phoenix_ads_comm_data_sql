@@ -1,6 +1,7 @@
 CREATE PROCEDURE CreditFacilitySegCommercialProcedure()
 BEGIN
     INSERT INTO credit_facility_seg (
+        cred_id,
         Account_Status,
         Account_Status_Date,
         Account_Number,
@@ -45,6 +46,7 @@ BEGIN
         borrower_id
     )
     SELECT
+        COALESCE(cf.A_c_No_, ''),
         IF(LENGTH(COALESCE(cf.Account_Status, '')) = 1,
            CONCAT('0', COALESCE(cf.Account_Status, '')),
            COALESCE(cf.Account_Status, '')
@@ -138,9 +140,8 @@ BEGIN
            COALESCE(cf.Transaction_Type_Code, '')
         ) AS Transaction_Type_Code,
         COALESCE(cf.Wilful_Default_Status, ''),
-        br.borrower_id
+        COALESCE(cf.A_c_No_, '')
     FROM Credit_Facility_Segment AS cf
-    JOIN borrower_seg AS br
-      ON cf.A_c_No_ = SUBSTRING_INDEX(br.unique_commercial_id, '_', 1)
-    WHERE br.borrower_id IS NOT NULL;
+    WHERE A_c_No_ IS NOT NULL
+      AND A_c_No_ != '';
 END

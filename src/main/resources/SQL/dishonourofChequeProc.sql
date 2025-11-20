@@ -27,9 +27,8 @@ BEGIN
            CONCAT('0', COALESCE(cd.Reason_for_Dishonour, '')),
            COALESCE(cd.Reason_for_Dishonour, '')
         ) AS Reason_for_Dishonour,
-        cf.cred_id
+        COALESCE(cd.A_c_No_, '')
     FROM Dishonour_of_Cheques_Segment_CD AS cd
-    JOIN credit_facility_seg AS cf
-          ON cd.A_c_No_ = cf.Account_Number
-        WHERE cf.cred_id IS NOT NULL;
+    WHERE A_c_No_ IS NOT NULL
+      AND A_c_No_ != '';
 END

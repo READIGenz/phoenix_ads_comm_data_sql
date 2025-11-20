@@ -42,7 +42,7 @@ BEGIN
         Voter_Id
     )
     SELECT
-        b.borrower_id,                                      -- first column
+        COALESCE(c.A_c_No_, ''),
         COALESCE(c.Address_Line_1, ''),
         COALESCE(c.Address_Line_2, ''),
         COALESCE(c.Address_Line_3, ''),
@@ -85,8 +85,6 @@ BEGIN
         COALESCE(c.UID, ''),
         COALESCE(c.Voter_ID, '')
     FROM Relationship_Segment c
-    JOIN borrower_seg b
-      ON c.A_c_No_ = SUBSTRING_INDEX(b.unique_commercial_id, '_', 1)
-    WHERE b.borrower_id IS NOT NULL;
-
+    WHERE A_c_No_ IS NOT NULL
+      AND A_c_No_ != '';
 END
