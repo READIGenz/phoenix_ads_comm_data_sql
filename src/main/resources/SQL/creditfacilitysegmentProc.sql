@@ -68,13 +68,13 @@ BEGIN
             WHEN LENGTH(cf.Asset_Classification_Date) = 7 THEN LPAD(cf.Asset_Classification_Date, 8, '0')
             ELSE COALESCE(cf.Asset_Classification_Date, '')
         END,
-        IF(LENGTH(COALESCE(cf.Asset_Classification, '')) = 1,
-           CONCAT('000', COALESCE(cf.Asset_Classification, '')),
-        IF(LENGTH(COALESCE(cf.Asset_Classification, '')) = 2,
-        CONCAT('00', COALESCE(cf.Asset_Classification, '')),
-        COALESCE(cf.Asset_Classification, '')
-        )
-        ) AS Asset_Classification,  -- Days_Past_Due (or change if numeric)
+       CASE
+           WHEN cf.Asset_Classification IS NOT NULL
+                AND cf.Asset_Classification REGEXP '^[0-9]+$'
+                AND LENGTH(cf.Asset_Classification) < 4
+           THEN CAST(cf.Asset_Classification AS UNSIGNED) + 1000
+           ELSE COALESCE(cf.Asset_Classification, '')
+       END AS Asset_Classification,
         IF(LENGTH(COALESCE(cf.Asset_based_Security_coverage, '')) = 1,
            CONCAT('0', COALESCE(cf.Asset_based_Security_coverage, '')),
            COALESCE(cf.Asset_based_Security_coverage, '')
